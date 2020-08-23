@@ -1,53 +1,38 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+<nav class="navbar navbar-transparent navbar-absolute">
     <div class="container-fluid">
-      <div class="navbar-wrapper">
-        <a class="navbar-brand" href="javascript:;">@yield('top')</a>
-      </div>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="navbar-toggler-icon icon-bar"></span>
-        <span class="navbar-toggler-icon icon-bar"></span>
-        <span class="navbar-toggler-icon icon-bar"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end">
-
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:;">
-              <i class="material-icons">dashboard</i>
-              <p class="d-lg-none d-md-block">
-                Stats
-              </p>
-            </a>
-          </li>
-
-
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">person</i>
-              <p class="d-lg-none d-md-block">
-                Account
-              </p>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-              <a class="dropdown-item" href="#">Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
-              <div class="dropdown-divider"></div>
-
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-            document.getElementById('logout').submit();"> <i class="material-icons">exit_to_app</i>
-                        Logout</a>
-            <form action="{{ route('logout') }}" id="logout" method="POST" style="display: none;">
-              @csrf
-          </form>
-            </a>
-          </li>
-        </ul>
-      </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> Welcome !! {{ Auth::user()->name }} </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">dashboard</i>
+                        <p class="hidden-lg hidden-md">Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">person</i>
+                        <p class="hidden-lg hidden-md">Profile</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        <i class="material-icons">exit_to_app</i>
+                        Logout
+                    </a>
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
-  <!-- End Navbar -->
+</nav>

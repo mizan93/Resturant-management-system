@@ -5,6 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Slider;
+use Brian2694\Toastr\Facades\Toastr;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 class SliderController extends Controller
 {
     /**
@@ -12,23 +19,12 @@ class SliderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if(request()->ajax())
-        {
-            return datatables()->of(AjaxCrud::latest()->get())
-                    ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
-                        $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
-                        return $button;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-        return view('admin.slider.index');
+        $sliders = Slider::latest()->get();
+        return view('admin.slider.index',compact('sliders'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +33,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.slider.create');
     }
 
     /**
@@ -48,7 +44,40 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required',
+            'sub_title' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,bmp,png',
+        ]);
+        // get form image
+        $image = $request->file('image');
+        $slug = Str::slug($request->title);
+
+        if (isset($image))
+        {
+//            make unique name for image
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+//            check slider dir is exists
+            if (!Storage::disk('public')->exists('slider'))
+            {
+                Storage::disk('public')->makeDirectory('slider');
+            }
+//            resize image for slider and upload
+            $slider = Image::make($image)->resize(500,333)->stream();
+            Storage::disk('public')->put('slider/'.$imagename,$slider);
+
+        } else {
+            $imagename = "default.png";
+        }
+        $slider= new Slider();
+        $slider->title=$request->title;
+        $slider->sub_title=$request->sub_title;
+        $slider->image=$imagename;
+        $slider->save();
+        Toastr::success('Slider hss been Created :)' ,'Success');
+
+        return redirect()->route('slider.index');
     }
 
     /**
@@ -70,7 +99,10 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
-        //
+
+            $slider = Slider::findOrFail($id);
+            return view('admin.slider.edit',compact('slider'));
+
     }
 
     /**
@@ -82,7 +114,44 @@ class SliderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required',
+            'sub_title' => 'required',
+            'image' => 'mimes:jpeg,jpg,bmp,png',
+        ]);
+        // get form image
+        $image = $request->file('image');
+        $slug = Str::slug($request->title);
+        $slider = Slider::find($id);
+        if (isset($image)) {
+            //            make unique name for image
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+            //            check slider dir is exists
+            if (!Storage::disk('public')->exists('slider')) {
+                Storage::disk('public')->makeDirectory('slider');
+            }
+            //            delete old image
+            if (Storage::disk('public')->exists('slider/' . $slider->image)) {
+                Storage::disk('public')->delete('slider/' . $slider->image);
+            }
+            //            resize image for slider and upload
+            $sliderimage = Image::make($image)->resize(500, 333)->stream();
+            Storage::disk('public')->put('slider/' . $imagename, $sliderimage);
+
+
+        } else {
+            $imagename = $slider->image;
+        }
+
+        $slider->title = $request->title;
+        $slider->sub_title = $request->sub_title;
+        $slider->image = $imagename;
+        $slider->save();
+        Toastr::success('slider has been Updated :)', 'Success');
+        return redirect()->route('slider.index');
+
+
     }
 
     /**
@@ -92,7 +161,12 @@ class SliderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {$slider = Slider::findOrFail($id);
+        if (Storage::disk('public')->exists('slider/' . $slider->image)) {
+            Storage::disk('public')->delete('slider/' . $slider->image);
+        }
+        $slider->delete();
+        Toastr::success('Slider has been Deleted :)', 'Success');
+        return redirect()->back();
     }
 }

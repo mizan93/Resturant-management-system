@@ -30,5 +30,7 @@ Route::group(['prefix'=>'admin','middleware' => 'auth','namespace'=>'Admin'], fu
 return view('admin.login');
     });
   Route::get('dashboard','DhashboardController@index')->name('admin.dashboard');
+  Route::get('/welcome','DhashboardController@welcome')->name('welcome');
    Route::resource('slider', 'SliderController');
+   Route::resource('category', 'CategoryController');
 });
