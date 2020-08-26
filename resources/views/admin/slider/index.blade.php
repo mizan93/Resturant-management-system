@@ -32,7 +32,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $slider->title }}</td>
                                             <td>{{ $slider->sub_title }}</td>
-                                            <td><img src="{{ url('storage/slider/'.$slider->image) }}" alt="image" height="80px" width="120px" srcset=""></td>
+                                            <td><img src="{{ url('storage/slider/'.$slider->image) }}" class="img-fluid" alt="image" height="80" width="120" srcset=""></td>
                                             <td>{{ $slider->created_at->toFormattedDateString() }}</td>
                                             <td>
                                                 <a href="{{ route('slider.edit',$slider->id) }}" class="btn btn-info btn-sm"><i class="material-icons">mode_edit</i></a>

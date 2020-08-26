@@ -43,7 +43,7 @@
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="email" type="email" name="email"  value="{{ old('email') }}" required autocomplete="email" autofocus>
                         @error('email')
-                        <span class="invalid-feedback" role="alert">
+                        <span class="invalid-feedback text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
@@ -55,7 +55,7 @@
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<input class="input100 @error('password') is-invalid @enderror" id="password " type="password" name="password" required autocomplete="current-password">
                         @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

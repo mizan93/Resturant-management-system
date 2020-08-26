@@ -7,53 +7,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- <link rel="shortcut icon" href="images/star.png" type="favicon/ico" /> -->
 
-        <title>Mamma's Kitchen</title>
+        <title>TasteiT</title>
+<link href='https://fonts.googleapis.com/css?family=Beth Ellen' rel='stylesheet'>
+        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> --}}
+{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> --}}
+    <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/flexslider.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/pricing.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap-datetimepicker.min.css') }}">
+	    <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css') }}">
 
-        <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/flexslider.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/pricing.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
-
-
-        <script src="js/jquery-1.11.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.flexslider.min.js"></script>
-        <script type="text/javascript">
-            $(window).load(function() {
-                $('.flexslider').flexslider({
-                 animation: "slide",
-                 controlsContainer: ".flexslider-container"
-                });
-            });
-        </script>
-
-        <script src="https://maps.googleapis.com/maps/api/js"></script>
-        <script>
-            function initialize() {
-                var mapCanvas = document.getElementById('map-canvas');
-                var mapOptions = {
-                    center: new google.maps.LatLng(24.909439, 91.833800),
-                    zoom: 16,
-                    scrollwheel: false,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
-                var map = new google.maps.Map(mapCanvas, mapOptions)
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(24.909439, 91.833800),
-                    title:"Mamma's Kitchen Restaurant"
-                });
-
-                // To add the marker to the map, call setMap();
-                marker.setMap(map);
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
+    <style>
+	
+@foreach($sliders as $key=>$slider)
+        
+            .owl-carousel .owl-wrapper, .owl-carousel .owl-item:nth-child({{ $key + 1 }}) .item
+            {
+                background: url({{ asset('uploads/slider/'.$slider->image) }});
+                background-size: cover;
             }
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
-
-
+        @endforeach
+	</style>
     </head>
     <body data-spy="scroll" data-target="#template-navbar">
 
@@ -68,8 +48,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">
-                        <img id="logo" src="{{ asset('frontend/images/Logo_main.png') }}" class="logo img-responsive">
+                    <a class="navbar-brand display-1" href="#" style="font-family: 'Beth Ellen'; font-size: 22px; color: white;" >
+                <h1 class="">TasteiT</h1>              
                     </a>
                 </div>
 
@@ -91,7 +71,8 @@
 
         <!--== 5. Header ==-->
         <section id="header-slider" class="owl-carousel">
-            <div class="item">
+            
+			<div class="item">
                 <div class="container">
                     <div class="header-content">
                         <h1 class="header-title">BEST FOOD</h1>
@@ -99,29 +80,14 @@
                     </div> <!-- /.header-content -->
                 </div>
             </div>
-            <div class="item">
-                <div class="container">
-                    <div class="header-content">
-                        <h1 class="header-title">BEST SNACKS</h1>
-                        <p class="header-sub-title">create your own slogan</p>
-                    </div> <!-- /.header-content -->
-                </div>
-            </div>
-            <div class="item">
-                <div class="container">
-                    <div class="header-content text-right pull-right">
-                        <h1 class="header-title">BEST DRINKS</h1>
-                        <p class="header-sub-title">create your own slogan</p>
-                    </div> <!-- /.header-content -->
-                </div>
-            </div>
+            
         </section>
 
 
 
         <!--== 6. About us ==-->
         <section id="about" class="about">
-            <img src="{{ asset('frontend/images/icons/about_color.png') }}" class="img-responsive section-icon hidden-sm hidden-xs">
+            <img src="images/icons/about_color.png" class="img-responsive section-icon hidden-sm hidden-xs">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -170,13 +136,13 @@
                 </div>
 
                 <div class="container">
-                    <div class="row">
+                    <div class="row">  
                         <div class="col-md-10 col-md-offset-1">
                             <ul id="menu-pricing" class="menu-price">
                                 <li class="item dinner">
 
                                     <a href="#">
-                                        <img src="{{ asset('frontend/images/food1.jpg') }}" class="img-responsive" alt="Food" >
+                                        <img src="images/food1.jpg" class="img-responsive" alt="Food" >
                                         <div class="menu-desc text-center">
                                             <span>
                                                 <h3>Tomato Curry</h3>
@@ -184,14 +150,14 @@
                                             </span>
                                         </div>
                                     </a>
-
+                                        
                                     <h2 class="white">$20</h2>
                                 </li>
 
                                 <li class="item breakfast">
 
                                     <a href="#">
-                                        <img src="{{ asset('fronetend/images/food2.jpg') }}" class="img-responsive" alt="Food" >
+                                        <img src="images/food2.jpg" class="img-responsive" alt="Food" >
                                         <div class="menu-desc">
                                             <span>
                                                 <h3>Prawn Dish</h3>
@@ -199,7 +165,7 @@
                                             </span>
                                         </div>
                                     </a>
-
+                                        
                                     <h2 class="white">$20</h2>
                                 </li>
                                 <li class="item desert">
@@ -213,7 +179,7 @@
                                             </span>
                                         </div>
                                     </a>
-
+                                        
                                     <h2 class="white">$18</h2>
                                 </li>
                                 <li class="item breakfast special">
@@ -227,7 +193,7 @@
                                             </span>
                                         </div>
                                     </a>
-
+                                        
                                     <h2 class="white">$15</h2>
                                 </li>
                                 <li class="item breakfast">
@@ -241,7 +207,7 @@
                                             </span>
                                         </div>
                                     </a>
-
+                                        
                                     <h2 class="white">$20</h2>
                                 </li>
                                 <li class="item dinner special">
@@ -297,20 +263,20 @@
                                             </span>
                                         </div>
                                     </a>
-
+                                    
                                     <h2 class="white">$38</h2>
-                                </li>
+                                </li>  
                             </ul>
 
                             <!-- <div class="text-center">
                                     <a id="loadPricingContent" class="btn btn-middle hidden-sm hidden-xs">Load More <span class="caret"></span></a>
                             </div> -->
 
-                        </div>
+                        </div>   
                     </div>
                 </div>
 
-            </div>
+            </div> 
         </section>
 
 
@@ -324,7 +290,7 @@
                             <h2 class="section-title">Great Place to enjoy</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-
+                            
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -335,7 +301,7 @@
 
         <!--==  9. Our Beer  ==-->
         <section id="beer" class="beer">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/beer_color.png') }}">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/beer_color.png">
             <div class="container-fluid">
                 <div class="row dis-table">
                     <div class="hidden-xs col-sm-6 dis-table-cell section-bg">
@@ -371,7 +337,7 @@
                             <h2 class="section-title">Our Breakfast Menu</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-
+                            
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -420,7 +386,7 @@
                             <h2 class="section-title">Our Featured Dishes Menu</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-
+                            
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -700,12 +666,11 @@
                                             <img src="images/menu-gallery/menu1.png" />
                                         </li>
                                         <li>
-                                            <img src="{{ asset("frontend/images/menu-gallery/menu2.jpg") }}" />
+                                            <img src="images/menu-gallery/menu2.jpg" />
                                         </li>
                                         <li>
-                                            <img src="{{ asset("frontend/images/menu-gallery/menu2.jpg") }}" />
+                                            <img src="images/menu-gallery/menu3.png" />
                                         </li>
-
                                         <li>
                                             <img src="images/menu-gallery/menu4.jpg" />
                                         </li>
@@ -738,7 +703,7 @@
                         <div class="gallery-heading hidden-xs color-bg" style="width: 50%; float:right;">
                             <h2 class="section-title">Have A Look To Our Dishes</h2>
                         </div>
-
+                        
 
                     </div> <!-- /.row -->
                 </div> <!-- /.container-fluid -->
@@ -750,7 +715,7 @@
 
         <!--== 15. Reserve A Table! ==-->
         <section id="reserve" class="reserve">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/reserve_black.png') }}">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/reserve_black.png">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -758,7 +723,7 @@
                             <h2 class="section-title">Reserve A Table !</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-
+                            
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -804,7 +769,7 @@
                                                 Make a reservation
                                             </button>
                                         </div>
-
+                                            
                                     </div>
                                 </form>
                             </div>
@@ -882,7 +847,7 @@
                     <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                         <div class="row">
                              <form class="contact-form" method="post" action="contact.php">
-
+                                
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <input  name="name" type="text" class="form-control" id="name" required="required" placeholder="  Name">
@@ -918,26 +883,41 @@
                     <div class="col-md-6 col-md-offset-3">
                         <div class="copyright text-center">
                             <p>
-                                Copyright &copy; 2015-@php
-                                 echo date('Y');
-                                @endphp <a href="#"> MamaKichen.</a> Theme by <a href="http://themewagon.com/"  target="_blank">ThemeWagon</a>developed by<a href="#"  target="_blank">M R Mizan</a>
+                                &copy; Copyright, 2015 <a href="#">Your Website Link.</a> Theme by <a href="http://themewagon.com/"  target="_blank">ThemeWagon</a>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
+		{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> --}}
+{{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> --}}
+<script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
+<script src="{{ asset('frontend/js/popper.min.js') }}"></script>
 
+<script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontend/js/jquery.mixitup.min.js') }}" ></script>
+<script src="{{ asset('frontend/js/wow.min.js') }}"></script>
+<script src="{{ asset('frontend/js/jquery.validate.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontend/js/jquery.hoverdir.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontend/js/jQuery.scrollSpeed.js') }}"></script>
+<script src="{{ asset('frontend/js/script.js') }}"></script>
+<script src="{{ asset('frontend/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ asset('frontend/js/toastr.min.js') }}"></script>
 
-        <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('frontend/js/jquery.mixitup.min.js') }}" ></script>
-        <script src="{{ asset('frontend/js/wow.min.js') }}"></script>
-        <script src="{{ asset('frontend/js/jquery.validate.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('frontend/js/jquery.hoverdir.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('frontend/js/jQuery.scrollSpeed.js') }}"></script>
-        <script src="{{ asset('frontend/js/script.js') }}"></script>
-
-
-    </body>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+    <script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: "dd MM yyyy - HH:11 P",
+            showMeridian: true,
+            autoclose: true,
+            todayBtn: true
+        });
+    })
+</script>
+{!! Toastr::message() !!}
+	</body>
 </html>

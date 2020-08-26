@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('name','Category')
+@section('title','Category')
 
 @push('css')
 

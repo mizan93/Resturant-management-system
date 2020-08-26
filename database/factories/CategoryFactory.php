@@ -4,10 +4,11 @@
 
 use App\Category;
 use Faker\Generator as Faker;
-
-$factory->define(Category::class, function (Faker $faker) {
+$categories=['category','category-2','categor-3','category-4','category-5'];
+$factory->define(Category::class, function (Faker $faker)use($categories) {
+    $categoryname=$categories[$faker->numberBetween(0,count($categories)-1)];
     return [
-        'name' => $faker->word(),
-        'slug' => 'name',
+       'name'=> $categoryname,
+        'slug' => Str::slug($categoryname),
     ];
 });

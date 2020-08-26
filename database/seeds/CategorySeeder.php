@@ -11,7 +11,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $slider=factory(App\Category::class,5)->create();
+        $slider=factory(App\Category::class)->create();
 
     }
 }

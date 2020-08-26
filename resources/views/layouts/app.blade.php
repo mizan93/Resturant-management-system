@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Mamma's Kichen-@yield('title')</title>
+    <title>TasteIT-@yield('title')</title>
 
     <!-- Styles -->
     <!-- Bootstrap core CSS     -->

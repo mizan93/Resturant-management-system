@@ -27,6 +27,12 @@
             <p>Categories</p>
           </a>
         </li>
+        <li class="{{ Request::is('admin/item*')? 'active' : '' }} ">
+            <a class="nav-link" href="{{ route('item.index') }}">
+              <i class="material-icons">library_books</i>
+              <p>Items</p>
+            </a>
+          </li>
         <li class="nav-item ">
           <a class="nav-link" href="./user.html">
             <i class="material-icons">person</i>
@@ -69,12 +75,7 @@
             <p>RTL Support</p>
           </a>
         </li>
-        <li class="nav-item active-pro ">
-          <a class="nav-link" href="./upgrade.html">
-            <i class="material-icons">unarchive</i>
-            <p>Upgrade to PRO</p>
-          </a>
-        </li>
+       
       </ul>
     </div>
   </div>
