@@ -20,20 +20,30 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/pricing.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap-datetimepicker.min.css') }}">
-	    <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css') }}"> --}}
 
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <style>
-	
-@foreach($sliders as $key=>$slider)
-        
-            .owl-carousel .owl-wrapper, .owl-carousel .owl-item:nth-child({{ $key + 1 }}) .item
-            {
-                background: url({{ asset('uploads/slider/'.$slider->image) }});
-                background-size: cover;
-            }
-        @endforeach
-	</style>
+       /* @foreach($sliders as $key=>$slider)
+        .owl-carousel .owl-wrapper, .owl-carousel .owl-item:nth-child({{ $key + 1 }}) .item
+        {
+             background: url({{ asset('storage/slider/'.$slider->image) }});
+             background-size: cover;
+        }
+        @endforeach */
+    </style>
+    <script src="{{ asset('frontend/js/jquery-1.11.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontend/js/jquery.flexslider.min.js') }}"></script>
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlsContainer: ".flexslider-container"
+            });
+        });
+    </script>
+
+
     </head>
     <body data-spy="scroll" data-target="#template-navbar">
 
@@ -49,7 +59,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand display-1" href="#" style="font-family: 'Beth Ellen'; font-size: 22px; color: white;" >
-                <h1 class="">TasteiT</h1>              
+                <h1 class="">TasteiT</h1>
                     </a>
                 </div>
 
@@ -57,11 +67,10 @@
                 <div class="collapse navbar-collapse" id="Food-fair-toggle">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#about">about</a></li>
-                        <li><a href="#pricing">pricing</a></li>
-                        <li><a href="#great-place-to-enjoy">beer</a></li>
-                        <li><a href="#breakfast">bread</a></li>
                         <li><a href="#featured-dish">featured</a></li>
                         <li><a href="#reserve">reservation</a></li>
+                        {{-- <li><a href="#great-place-to-enjoy">beer</a></li>
+                        <li><a href="#breakfast">bread</a></li> --}}
                         <li><a href="#contact">contact</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -71,23 +80,24 @@
 
         <!--== 5. Header ==-->
         <section id="header-slider" class="owl-carousel">
-            
+            @foreach ($sliders as $key=>$slider)
 			<div class="item">
                 <div class="container">
                     <div class="header-content">
-                        <h1 class="header-title">BEST FOOD</h1>
-                        <p class="header-sub-title">create your own slogan</p>
+                        <h1 class="header-title">{{ $slider->title }}</h1>
+                        <p class="header-sub-title">{{ $slider->sub_title }}</p>
                     </div> <!-- /.header-content -->
                 </div>
             </div>
-            
+            @endforeach
+
         </section>
 
 
 
         <!--== 6. About us ==-->
         <section id="about" class="about">
-            <img src="images/icons/about_color.png" class="img-responsive section-icon hidden-sm hidden-xs">
+            <img src="{{ asset('frontend/images/icons/about_color.png') }}" class="img-responsive section-icon hidden-sm hidden-xs">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -112,7 +122,7 @@
 
 
         <!--==  7. Afordable Pricing  ==-->
-        <section id="pricing" class="pricing">
+        <section id="featured-dish" class="pricing">
             <div id="w">
                 <div class="pricing-filter">
                     <div class="pricing-filter-wrapper">
@@ -123,10 +133,9 @@
                                         <h2 class="pricing-title">Affordable Pricing</h2>
                                         <ul id="filter-list" class="clearfix">
                                             <li class="filter" data-filter="all">All</li>
-                                            <li class="filter" data-filter=".breakfast">Breakfast</li>
-                                            <li class="filter" data-filter=".special">Special</li>
-                                            <li class="filter" data-filter=".desert">Desert</li>
-                                            <li class="filter" data-filter=".dinner">Dinner</li>
+                                            @foreach ($categories as $category)
+                                            <li class="filter" data-filter="#{{ $category->slug }}">{{ $category->name }} <span class="badge badge-info">{{ $category->items->count() }}</span></li>
+                                            @endforeach
                                         </ul><!-- @end #filter-list -->
                                     </div>
                                 </div>
@@ -136,153 +145,38 @@
                 </div>
 
                 <div class="container">
-                    <div class="row">  
+                    <div class="row">
                         <div class="col-md-10 col-md-offset-1">
                             <ul id="menu-pricing" class="menu-price">
-                                <li class="item dinner">
-
+                                @foreach ($items as $item)
+                                <li class="item dinner" id="{{ $item->category->slug }}">
                                     <a href="#">
-                                        <img src="images/food1.jpg" class="img-responsive" alt="Food" >
+                                        <img src="{{ url('storage/item/'.$item->image) }}" class="img-responsive" alt="Item" >
                                         <div class="menu-desc text-center">
                                             <span>
-                                                <h3>Tomato Curry</h3>
-                                                Natalie &amp; Justin Cleaning by Justin Younger
+                                                <h3>{{ $item->name }}</h3>
+                                               {!! $item->description !!}
                                             </span>
                                         </div>
                                     </a>
-                                        
-                                    <h2 class="white">$20</h2>
+                                    <h2 class="white">$ {{ $item->price }}</h2>
                                 </li>
-
-                                <li class="item breakfast">
-
-                                    <a href="#">
-                                        <img src="images/food2.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Prawn Dish</h3>
-                                                Lorem ipsum dolor sit amet
-                                            </span>
-                                        </div>
-                                    </a>
-                                        
-                                    <h2 class="white">$20</h2>
-                                </li>
-                                <li class="item desert">
-
-                                    <a href="#">
-                                        <img src="images/food3.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Salad Dish</h3>
-                                                Consectetur adipisicing elit, sed do eiusmod
-                                            </span>
-                                        </div>
-                                    </a>
-                                        
-                                    <h2 class="white">$18</h2>
-                                </li>
-                                <li class="item breakfast special">
-
-                                    <a href="#">
-                                        <img src="images/food4.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Prawn Dish</h3>
-                                                Tempor incididunt ut labore et dolore
-                                            </span>
-                                        </div>
-                                    </a>
-                                        
-                                    <h2 class="white">$15</h2>
-                                </li>
-                                <li class="item breakfast">
-
-                                    <a href="#">
-                                        <img src="images/food5.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Vegetable Dish</h3>
-                                                Magna aliqua. Ut enim ad minim veniam
-                                            </span>
-                                        </div>
-                                    </a>
-                                        
-                                    <h2 class="white">$20</h2>
-                                </li>
-                                <li class="item dinner special">
-
-                                    <a href="#">
-                                        <img src="images/food6.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Chicken Dish</h3>
-                                                Quis nostrud exercitation ullamco laboris
-                                            </span>
-                                        </div>
-                                    </a>
-
-                                    <h2 class="white">$22</h2>
-                                </li>
-                                <li class="item desert">
-
-                                    <a href="#">
-                                        <img src="images/food7.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Vegetable Noodles</h3>
-                                                Nisi ut aliquip ex ea commodo
-                                            </span>
-                                        </div>
-                                    </a>
-
-                                    <h2 class="white">$32</h2>
-                                </li>
-                                <li class="item dinner">
-
-                                    <a href="#">
-                                        <img src="images/food8.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Special Salad</h3>
-                                                Duis aute irure dolor in reprehenderit
-                                            </span>
-                                        </div>
-                                    </a>
-
-                                    <h2 class="white">$38</h2>
-                                </li>
-                                <li class="item desert special">
-
-                                    <a href="#">
-                                        <img src="images/food9.jpg" class="img-responsive" alt="Food" >
-                                        <div class="menu-desc">
-                                            <span>
-                                                <h3>Ice-cream</h3>
-                                                Excepteur sint occaecat cupidatat non
-                                            </span>
-                                        </div>
-                                    </a>
-                                    
-                                    <h2 class="white">$38</h2>
-                                </li>  
+                                @endforeach
                             </ul>
-
                             <!-- <div class="text-center">
                                     <a id="loadPricingContent" class="btn btn-middle hidden-sm hidden-xs">Load More <span class="caret"></span></a>
                             </div> -->
-
-                        </div>   
+                        </div>
                     </div>
                 </div>
 
-            </div> 
+            </div>
         </section>
 
 
         <!--== 8. Great Place to enjoy ==-->
         <section id="great-place-to-enjoy" class="great-place-to-enjoy">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/beer_black.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/beer_black.png') }}">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -290,7 +184,7 @@
                             <h2 class="section-title">Great Place to enjoy</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-                            
+
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -301,7 +195,7 @@
 
         <!--==  9. Our Beer  ==-->
         <section id="beer" class="beer">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/beer_color.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/beer_color.png') }}">
             <div class="container-fluid">
                 <div class="row dis-table">
                     <div class="hidden-xs col-sm-6 dis-table-cell section-bg">
@@ -329,7 +223,7 @@
 
         <!--== 10. Our Breakfast Menu ==-->
         <section id="breakfast" class="breakfast">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/bread_black.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/bread_black.png') }}">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -337,7 +231,7 @@
                             <h2 class="section-title">Our Breakfast Menu</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-                            
+
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -348,7 +242,7 @@
 
         <!--== 11. Our Bread ==-->
         <section id="bread" class="bread">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/bread_color.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/bread_color.png') }}">
             <div class="container-fluid">
                 <div class="row dis-table">
                     <div class="hidden-xs col-sm-6 dis-table-cell section-bg">
@@ -378,7 +272,7 @@
 
         <!--== 12. Our Featured Dishes Menu ==-->
         <section id="featured-dish" class="featured-dish">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/food_black.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/food_black.png') }}">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -386,7 +280,7 @@
                             <h2 class="section-title">Our Featured Dishes Menu</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-                            
+
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -396,7 +290,7 @@
 
 
 
-        <!--== 13. Menu List ==-->
+        {{-- <!--== 13. Menu List ==-->
         <section id="menu-list" class="menu-list">
             <div class="container">
                 <div class="row menu">
@@ -646,14 +540,14 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
 
 
         <!--== 14. Have a look to our dishes ==-->
 
         <section id="have-a-look" class="have-a-look hidden-xs">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/food_color.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/food_color.png') }}">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -663,7 +557,7 @@
                                 <div class="flexslider">
                                     <ul class="slides">
                                         <li>
-                                            <img src="images/menu-gallery/menu1.png" />
+                                            <img src="{{ asset('frontend/images/menu-gallery/menu1.png') }}" />
                                         </li>
                                         <li>
                                             <img src="images/menu-gallery/menu2.jpg" />
@@ -703,7 +597,7 @@
                         <div class="gallery-heading hidden-xs color-bg" style="width: 50%; float:right;">
                             <h2 class="section-title">Have A Look To Our Dishes</h2>
                         </div>
-                        
+
 
                     </div> <!-- /.row -->
                 </div> <!-- /.container-fluid -->
@@ -715,7 +609,7 @@
 
         <!--== 15. Reserve A Table! ==-->
         <section id="reserve" class="reserve">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/reserve_black.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/reserve_black.png') }}">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row dis-table">
@@ -723,7 +617,7 @@
                             <h2 class="section-title">Reserve A Table !</h2>
                         </div>
                         <div class="col-xs-6 col-sm-6 dis-table-cell section-bg">
-                            
+
                         </div>
                     </div> <!-- /.dis-table -->
                 </div> <!-- /.row -->
@@ -733,34 +627,48 @@
 
 
         <section class="reservation">
-            <img class="img-responsive section-icon hidden-sm hidden-xs" src="images/icons/reserve_color.png">
+            <img class="img-responsive section-icon hidden-sm hidden-xs" src="{{ asset('frontend/images/icons/reserve_color.png') }}">
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class=" section-content">
                         <div class="row">
                             <div class="col-md-5 col-sm-6">
-                                <form class="reservation-form" method="post" action="reserve.php">
+                                <form class="reservation-form" method="post" action="{{ route('reservation.reserve') }}">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control reserve-form empty iconified" name="name" id="name" required="required" placeholder="  &#xf007;  Name">
+                                                <input type="text" class="form-control reserve-form empty iconified" name="name" id="name"
+                                                       placeholder="  &#xf007;  Name">
+                                                       @error('name')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                             <div class="form-group">
-                                                <input type="email" name="email" class="form-control reserve-form empty iconified" id="email" required="required" placeholder="  &#xf1d8;  e-mail">
+                                                <input type="email" name="email" class="form-control reserve-form empty iconified" id="email"  placeholder="  &#xf1d8;  e-mail">
+                                          @error('email')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                         </div>
 
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <input type="tel" class="form-control reserve-form empty iconified" name="phone" id="phone" required="required" placeholder="  &#xf095;  Phone">
+                                                <input type="tel" class="form-control reserve-form empty iconified" name="phone" id="phone"  placeholder="  &#xf095;  Phone">
+                                            @error('phone')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control reserve-form empty iconified" name="datepicker" id="datepicker" required="required" placeholder="&#xf017;  Time">
+                                                <input type="text" class="form-control reserve-form empty iconified" name="dateandtime" id="datetimepicker1" placeholder="&#xf017;  Time">
+                                           @error('dateandtime')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 col-sm-12">
-                                            <textarea type="text" name="message" class="form-control reserve-form empty iconified" id="message" rows="3" required="required" placeholder="  &#xf086;  We're listening"></textarea>
+                                            <textarea type="text" name="message" class="form-control reserve-form empty iconified" id="message" rows="3"  placeholder="  &#xf086;  We're listening"></textarea>
                                         </div>
 
                                         <div class="col-md-12 col-sm-12">
@@ -769,7 +677,7 @@
                                                 Make a reservation
                                             </button>
                                         </div>
-                                            
+
                                     </div>
                                 </form>
                             </div>
@@ -800,8 +708,6 @@
                 </div>
             </div>
         </section>
-
-
 
 
         <section id="contact" class="contact">
@@ -838,30 +744,40 @@
                 <div id="map-canvas"></div>
             </div>
         </div>
-
-
-
         <section class="contact-form">
             <div class="container">
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                         <div class="row">
-                             <form class="contact-form" method="post" action="contact.php">
-                                
+                             <form class="contact-form" method="post" action="{{ route('contact') }}">
+                                @csrf
+                                @method('POST')
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <input  name="name" type="text" class="form-control" id="name" required="required" placeholder="  Name">
+                                        @error('name')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
                                     </div>
                                     <div class="form-group">
                                         <input name="email" type="email" class="form-control" id="email" required="required" placeholder="  Email">
+                                        @error('email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                          @enderror
                                     </div>
                                     <div class="form-group">
                                         <input name="subject" type="text" class="form-control" id="subject" required="required" placeholder="  Subject">
-                                    </div>
+
+                                        @error('subject')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                          @enderror</div>
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
-                                    <textarea name="message" type="text" class="form-control" id="message" rows="7" required="required" placeholder="  Message"></textarea>
+                                    <textarea name="message" type="text" class="form-control" id="message" rows="7" required="required" placeholder="Message"></textarea>
+                                    @error('message')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                      @enderror
                                 </div>
 
                                 <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
@@ -905,9 +821,17 @@
 <script type="text/javascript" src="{{ asset('frontend/js/jQuery.scrollSpeed.js') }}"></script>
 <script src="{{ asset('frontend/js/script.js') }}"></script>
 <script src="{{ asset('frontend/js/bootstrap-datetimepicker.min.js') }}"></script>
-<script src="{{ asset('frontend/js/toastr.min.js') }}"></script>
+{{-- <script src="{{ asset('frontend/js/toastr.min.js') }}"></script> --}}
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+   @if ($errors->any())
+    @foreach ($errors->all() as $error)
+       <script>
+           toastr.error('{{ $error }}');
+       </script>
+    @endforeach
+@endif
+
     <script>
     $(function () {
         $('#datetimepicker1').datetimepicker({
@@ -916,7 +840,7 @@
             autoclose: true,
             todayBtn: true
         });
-    })
+    });
 </script>
 {!! Toastr::message() !!}
 	</body>

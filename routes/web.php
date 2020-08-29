@@ -31,8 +31,13 @@ return view('admin.login');
    Route::resource('slider', 'SliderController');
    Route::resource('category', 'CategoryController');
    Route::resource('item', 'ItemController');
+   Route::get('reservation','ReservationController@index')->name('reservation.index');
+   Route::post('reservation/{id}','ReservationController@statusChange')->name('reservation.confirm');
+   Route::delete('reservation/{id}','ReservationController@destroy')->name('reservation.destroy');
 });
 
-// Public route
+Route::post('/reservation', 'ReservationController@reservation')->name('reservation.reserve');
+Route::post('/contact', 'ContackController@contact')->name('contact');
+
 
 

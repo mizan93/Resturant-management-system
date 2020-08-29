@@ -64,7 +64,7 @@ class SliderController extends Controller
                 Storage::disk('public')->makeDirectory('slider');
             }
 //            resize image for slider and upload
-            $slider = Image::make($image)->resize(500,333)->stream();
+            $slider = Image::make($image)->resize(500, 333)->stream();
             Storage::disk('public')->put('slider/'.$imagename,$slider);
 
         } else {

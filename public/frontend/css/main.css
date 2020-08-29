@@ -268,8 +268,8 @@ input.empty, textarea.empty {
 -----------------------------------------------*/
 
 nav.navbar.shrink {
-	max-height: 62px;
-  	padding: 12px 0px;
+	max-height: 90px;
+  	padding: 12px 5px;
   	transition: all 0.3s ease-in-out;
   	-webkit-transition: all 0.3s ease-in-out;
   	-moz-transition: all 0.3s ease-in-out;

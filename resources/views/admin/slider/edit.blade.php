@@ -47,7 +47,6 @@
                                     <div class="col-md-12">
                                         <label class="control-label">Image</label>
                                         <input type="file" name="image" class="@error('image') is-invalid @enderror">
-                                    <img src="{{ url('storage/slider/'.$slider->image) }}" width="200px" height="150px" alt="image">
                                         @error('image')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                               @enderror
