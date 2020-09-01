@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 class ReservationController extends Controller
 {
     public function index(){
+        $reservation_count=Reservation::where('status','false')->get();
         $reservation=Reservation::latest()->get();
-        return view('admin.reservation.index',compact('reservation'));
+        return view('admin.reservation.index',compact('reservation','reservation_count'));
     }
     public function statusChange($id){
        $reservation=Reservation::findOrFail($id);

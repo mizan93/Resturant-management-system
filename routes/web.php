@@ -31,13 +31,20 @@ return view('admin.login');
    Route::resource('slider', 'SliderController');
    Route::resource('category', 'CategoryController');
    Route::resource('item', 'ItemController');
+//    Route::get('restaurantinfo','RestaurantInfoController@index')->name('restaurantinfo.index');
+   Route::get('restaurantinfo','RestaurantInfoController@index')->name('restaurantinfo.index');
+   Route::get('restaurantinfo/edit/{id}','RestaurantInfoController@edit')->name('restaurantinfo.edit');
+   Route::post('restaurantinfo/update/{id}','RestaurantInfoController@update')->name('restaurantinfo.update');
+   Route::get('contact','ContactController@index')->name('contact.index');
+   Route::get('contact/show/{id}','ContactController@show')->name('contact.show');
+   Route::delete('contact/{id}','ContactController@destroy')->name('contact.destroy');
    Route::get('reservation','ReservationController@index')->name('reservation.index');
    Route::post('reservation/{id}','ReservationController@statusChange')->name('reservation.confirm');
    Route::delete('reservation/{id}','ReservationController@destroy')->name('reservation.destroy');
 });
 
 Route::post('/reservation', 'ReservationController@reservation')->name('reservation.reserve');
-Route::post('/contact', 'ContackController@contact')->name('contact');
+Route::post('/contact', 'ContactController@contact')->name('contact.store');
 
 
 

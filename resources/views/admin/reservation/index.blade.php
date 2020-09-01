@@ -14,7 +14,13 @@
                     {{-- <a href="{{ route('reservation.create') }}" class="btn btn-primary">Add New</a> --}}
                     <div class="card">
                         <div class="card-header" data-background-color="purple">
-                            <h4 class="title">All reservation <span class="badge badge-info display-4">{{ $reservation->count()}}</span></h4>
+                            <h4 class="title">All reservation <span class="badge badge-info display-4">{{ $reservation->count()}}</span>New reservation
+
+                              <span class="badge badge-info display-4">
+                                {{ $reservation_count->count()}}
+                                 </span>
+                                
+                                </h4>
                         </div>
                         <div class="card-content table-responsive">
                             <table id="table" class="table"  cellspacing="0" width="100%">

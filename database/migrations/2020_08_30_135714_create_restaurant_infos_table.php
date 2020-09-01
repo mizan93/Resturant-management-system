@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContacksTable extends Migration
+class CreateRestaurantInfosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateContacksTable extends Migration
      */
     public function up()
     {
-        Schema::create('contacks', function (Blueprint $table) {
-            
+        Schema::create('restaurant_infos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('address');
+            $table->string('phone');
             $table->string('email');
-            $table->string('subject');
-            $table->text('message');
+            $table->string('fb_link');
+            $table->string('tw_link');
+            $table->string('gplus_link');
+            $table->string('ln_link');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class CreateContacksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contacks');
+        Schema::dropIfExists('restaurant_infos');
     }
 }

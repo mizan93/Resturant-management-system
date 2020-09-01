@@ -39,6 +39,18 @@
               <p>Items</p>
             </a>
           </li>
+        <li class="{{ Request::is('admin/contact*')? 'active' : '' }} ">
+            <a class="nav-link" href="{{ route('contact.index') }}">
+              <i class="material-icons">message</i>
+              <p>Contact Message</p>
+            </a>
+          </li>
+          <li class="{{ Request::is('admin/restaurantinfo*')? 'active' : '' }} ">
+            <a class="nav-link" href="{{ route('restaurantinfo.index') }}">
+              <i class="material-icons">content_paste</i>
+              <p>Restaurant info.</p>
+            </a>
+          </li>
         <li class="nav-item ">
           <a class="nav-link" href="./user.html">
             <i class="material-icons">person</i>
