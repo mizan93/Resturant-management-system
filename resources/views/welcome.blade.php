@@ -300,10 +300,19 @@
             </div>
         </section>
 
+        <div class="container-fluid">
+            <div class="row">
+                <div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.2402711150266!2d90.36329356498182!3d23.774456884577546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0a555667c3d%3A0xec49503fc397c419!2sShyamoli%20Square%2C%20Plot%20%23%2024%2F1-2%2C%20Mirpur%20Rd%2C%20Dhaka%201207!5e0!3m2!1sen!2sbd!4v1599030875802!5m2!1sen!2sbd" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
+            </div>
+        </div>
+
+
 <section class="contact-form">
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <h2 class="text-center">===== Make a reveiw =====</h2>
                 <div class="row">
                     <form class="contact-form" method="post" action="{{ route('contact.send') }}">
                         @csrf
@@ -342,8 +351,8 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="copyright text-center">
                     <p>
-                        &copy; Copyright, {{ date('Y') }} <a href="#">Mamma's Kitchen.</a> <strong> Developed &amp; <i class="far fa-heart"></i> by </strong>
-                        <a href="https://www.youtube.com/channel/UCwbVAlvrsD2Tpx93bleNbOA" target="_blank">Programming kit</a>
+                        &copy; Copyright, {{ date('Y') }} <a href="#">TasteiT.</a> <p>Developed by
+                        <a href="#"><strong>M R Mizan</strong></a></p>
                     </p>
                 </div>
             </div>
