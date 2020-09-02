@@ -44,7 +44,7 @@ return view('admin.login');
 });
 
 Route::post('/reservation', 'ReservationController@reservation')->name('reservation.reserve');
-Route::post('/contact', 'ContactController@contact')->name('contact.store');
+Route::post('/contact', 'ContactController@contact')->name('contact.send');
 
 
 

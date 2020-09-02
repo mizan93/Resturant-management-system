@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\ReservationConfirm;
 use App\Reservation;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class ReservationController extends Controller
 {
@@ -18,6 +20,10 @@ class ReservationController extends Controller
        $reservation=Reservation::findOrFail($id);
        $reservation->status=true;
        $reservation->save();
+       Notification::route('mail', $reservation->email)
+            // ->route('nexmo', '5555555555')
+            // ->route('slack', 'https://hooks.slack.com/services/...')
+            ->notify(new ReservationConfirm());
        Toastr::success('Reservation has been confirmed.','Success');
        return redirect()->back();
     }

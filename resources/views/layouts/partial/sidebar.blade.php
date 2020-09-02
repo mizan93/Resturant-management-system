@@ -4,8 +4,8 @@
 
       Tip 2: you can also add an image using data-image tag
   -->
-    <div class="logo"><a href="{{route('welcome')}}" class="simple-text logo-normal">
-        Mamma's Kitchen
+    <div class="logo"><a href="{{route('admin.dashboard')}}"  class="simple-text logo-normal">
+       TasteiT
       </a></div>
     <div class="sidebar-wrapper">
       <ul class="nav">

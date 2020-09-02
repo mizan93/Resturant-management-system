@@ -19,7 +19,7 @@
                               <span class="badge badge-info display-4">
                                 {{ $reservation_count->count()}}
                                  </span>
-                                
+
                                 </h4>
                         </div>
                         <div class="card-content table-responsive">
@@ -57,7 +57,7 @@
                                                     @csrf
 
                                                 </form>
-                                                <button type="button" class="btn btn-info btn-sm" onclick="if(confirm('Are you var to confirm this reservation?')){
+                                                <button type="button" class="btn btn-info btn-sm" onclick="if(confirm('Are you sure to confirm this reservation?')){
                                                     event.preventDefault();
                                                     document.getElementById('status-form-{{ $reservation->id }}').submit();
                                                 }else {
