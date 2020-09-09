@@ -10,12 +10,12 @@ A confirmation Email sent to user .
  backend: laravel, mysql.
  
  -----------------------------Screenshoot------------------------------------------
-<img src="screnshot/Capture.PNG"/>
-<img src="screnshot/Capture2.PNG"/>
-<img src="screnshot/Capture3.PNG"/>
-<img src="screnshot/Capture4.PNG"/>
-<img src="screnshot/Capture5.PNG"/>
-<img src="screnshot/Capture6.PNG"/>
-<img src="screnshot/Capture5.PNG"/>
+<img src="screenshot/Capture.PNG"/>
+<img src="screenshot/Capture2.PNG"/>
+<img src="screenshot/Capture3.PNG"/>
+<img src="screenshot/Capture4.PNG"/>
+<img src="screenshot/Capture5.PNG"/>
+<img src="screenshot/Capture6.PNG"/>
+<img src="screenshot/Capture5.PNG"/>
 
 
